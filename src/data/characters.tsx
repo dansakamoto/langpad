@@ -1,4 +1,5 @@
-export type Character = { kanji: string; translation: string; file: string };
+import type { Character } from "../types";
+
 export const characters: Character[] = [
   { kanji: "一", translation: "1", file: "audio/1.mp3" },
   { kanji: "二", translation: "2", file: "audio/2.mp3" },
