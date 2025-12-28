@@ -41,6 +41,28 @@ export default function App() {
       updated[updated.length - 1].group = newGroup;
 
       setChunks(updated);
+    } else if (
+      chunks.length > 0 &&
+      isValidNumber(
+        chunks[chunks.length - 1].group +
+          trigger
+            .replace("万", "一万")
+            .replace("億", "一億")
+            .replace("兆", "一兆")
+      )
+    ) {
+      const updated = [...chunks];
+      const newGroup =
+        chunks[chunks.length - 1].group +
+        trigger
+          .replace("万", "一万")
+          .replace("億", "一億")
+          .replace("兆", "一兆");
+      a.loadAudio(newGroup);
+
+      updated[updated.length - 1].group = newGroup;
+
+      setChunks(updated);
     } else {
       setChunks([
         ...chunks,
