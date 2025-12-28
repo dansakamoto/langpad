@@ -6,7 +6,7 @@ export default function ButtonBoard({ handleTap }: { handleTap: TapHandler }) {
   const buttons = characters.map((char) => (
     <button
       key={"kanjigrid-" + char.kanji}
-      className="p-1"
+      className="p-3"
       onPointerDown={() => handleTap(char.kanji)}
       style={{ touchAction: "manipulation" }}
     >
@@ -15,14 +15,16 @@ export default function ButtonBoard({ handleTap }: { handleTap: TapHandler }) {
   ));
 
   return (
-    <div className="flex flex-col">
-      <div className="text-6xl flex justify-center">{buttons}</div>
+    <div className="flex flex-col h-1/2 m-10">
+      <div className="text-6xl flex flex-col flex-wrap-reverse content-center h-full">
+        {buttons}
+      </div>
       <button
-        className="text-3xl"
+        className="text-6xl"
         onPointerDown={() => handleTap("play")}
         style={{ touchAction: "manipulation" }}
       >
-        Play
+        ▶
       </button>
     </div>
   );

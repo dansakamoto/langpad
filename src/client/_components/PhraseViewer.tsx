@@ -35,8 +35,8 @@ export default function PhraseViewer({
       : getTranslation(chunks[chunks.length - 1].group);
 
   return (
-    <div className="h-1/5 flex flex-col justify-evenly">
-      <ul id="viewer" className="flex">
+    <div className="h-1/5 flex flex-col justify-evenlyr">
+      <ul id="viewer" className="flex justify-center">
         {phraseList}
       </ul>
       <div className="flex justify-center text-3xl">{translation}</div>
