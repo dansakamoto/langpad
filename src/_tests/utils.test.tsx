@@ -10,7 +10,7 @@ test("千兆百億十万九", () => {
 });
 
 test("九万千二百四十一", () => {
-  expect(isValidNumber("千兆百億十万九")).toBe(true);
+  expect(isValidNumber("九万千二百四十一")).toBe(true);
 });
 
 test("二三", () => {
