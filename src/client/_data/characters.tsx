@@ -26,3 +26,5 @@ export const ichiMods = {
   億: "一億",
   兆: "一兆",
 };
+
+export const moreExceptions = ["一千"];

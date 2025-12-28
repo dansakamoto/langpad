@@ -32,6 +32,7 @@ function isValidSmallChunk(s: string) {
 
     if (c === "一" && singleValid) {
       if (i === s.length - 1) return true;
+      if (s[i + 1] === "千") continue;
       return false;
     }
 

@@ -9,8 +9,20 @@ test("千兆百億十万九", () => {
   expect(isValidNumber("千兆百億十万九")).toBe(true);
 });
 
+test("一千", () => {
+  expect(isValidNumber("一千")).toBe(true);
+});
+
 test("九万千二百四十一", () => {
   expect(isValidNumber("九万千二百四十一")).toBe(true);
+});
+
+test("一百", () => {
+  expect(isValidNumber("一百")).toBe(false);
+});
+
+test("一十", () => {
+  expect(isValidNumber("一十")).toBe(false);
 });
 
 test("二三", () => {

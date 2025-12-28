@@ -3,10 +3,15 @@ import * as googleTTS from "google-tts-api";
 import { kanji2number } from "@geolonia/japanese-numeral";
 import fetch from "node-fetch";
 
-import { characters, ichiMods } from "../../client/_data/characters";
+import {
+  characters,
+  ichiMods,
+  moreExceptions,
+} from "../../client/_data/characters";
 
-const highNums = Object.keys(ichiMods);
-const list = Object.values(ichiMods);
+const highNums = Object.keys(ichiMods).concat(moreExceptions);
+
+const list = Object.values(ichiMods).concat(moreExceptions);
 for (const c of characters) {
   list.push(c.kanji);
 }

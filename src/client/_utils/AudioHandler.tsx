@@ -1,4 +1,4 @@
-import { characters, ichiMods } from "../_data/characters";
+import { characters, ichiMods, moreExceptions } from "../_data/characters";
 
 import type { KanjiGroup } from "../types";
 
@@ -15,18 +15,14 @@ export class AudioHandler {
   waitRemaining = bufferAllowance;
 
   async setupAudio() {
-    for (const char of characters) {
-      const data = await fetch("audio/core/" + char.kanji + ".mp3");
-      const arrayBuffer = await data.arrayBuffer();
-      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-      this.loadedAudio[char.kanji] = audioBuffer;
-    }
+    const toLoad = [...Object.values(ichiMods), ...moreExceptions];
+    for (const c of characters) toLoad.push(c.kanji);
 
-    for (const v of Object.values(ichiMods)) {
-      const data = await fetch("audio/core/" + v + ".mp3");
+    for (const x of toLoad) {
+      const data = await fetch("audio/core/" + x + ".mp3");
       const arrayBuffer = await data.arrayBuffer();
       const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
-      this.loadedAudio[v] = audioBuffer;
+      this.loadedAudio[x] = audioBuffer;
     }
   }
 
