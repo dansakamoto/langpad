@@ -1,4 +1,6 @@
+import { kanji2number } from "@geolonia/japanese-numeral";
 import { characters } from "../_data/characters";
+import { isValidNumber } from "./validators";
 
 const translations: Record<string, string> = {};
 
@@ -7,5 +9,7 @@ for (const c of characters) {
 }
 
 export default function getTranslation(s: string) {
-  return s in translations ? translations[s] : "?";
+  if (s in translations) return translations[s];
+  if (isValidNumber(s)) return kanji2number(s);
+  return "";
 }
