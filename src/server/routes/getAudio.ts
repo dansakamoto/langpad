@@ -5,6 +5,8 @@ import fs from "fs";
 
 import type { Request, Response } from "express";
 
+const apiExceptions = ["十一", "二兆"];
+
 export default async function getAudio(req: Request<string>, res: Response) {
   const clientPath = "audio/downloaded/" + req.body.text + ".mp3";
   const serverPath = "public/" + clientPath;
@@ -14,7 +16,8 @@ export default async function getAudio(req: Request<string>, res: Response) {
     return;
   }
 
-  const num = kanji2number(req.body.text);
+  const t = req.body.text;
+  const num = !apiExceptions.includes(t) ? kanji2number(t) : t;
 
   const audioData = await googleTTS.getAudioBase64(num.toString(), {
     lang: "ja",
