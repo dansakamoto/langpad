@@ -1,4 +1,4 @@
-import { characters } from "../_data/characters";
+import { characters, ichiMods } from "../_data/characters";
 
 import type { KanjiGroup } from "../types";
 
@@ -21,6 +21,13 @@ export class AudioHandler {
       const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
       this.loadedAudio[char.kanji] = audioBuffer;
     }
+
+    for (const v of Object.values(ichiMods)) {
+      const data = await fetch("audio/core/" + v + ".mp3");
+      const arrayBuffer = await data.arrayBuffer();
+      const audioBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+      this.loadedAudio[v] = audioBuffer;
+    }
   }
 
   async loadAudio(s: string) {
@@ -34,7 +41,6 @@ export class AudioHandler {
       });
 
       const res = await TTS.json();
-      //console.log(TTSResult.url);
 
       if (res.type === "data") {
         const arrayBuffer = base64ToArrayBuffer(res.audioData);

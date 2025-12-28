@@ -44,7 +44,10 @@ export default function App() {
         ...chunks,
         {
           key: "grouping-" + keyItr++,
-          group: trigger,
+          group: trigger
+            .replace("万", "一万")
+            .replace("億", "一億")
+            .replace("兆", "一兆"),
         },
       ]);
     }

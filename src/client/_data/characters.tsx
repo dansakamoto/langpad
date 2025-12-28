@@ -20,3 +20,9 @@ export const characters: Character[] = [
     translation: "1,000,000,000,000",
   },
 ];
+
+export const ichiMods = {
+  万: "一万",
+  億: "一億",
+  兆: "一兆",
+};

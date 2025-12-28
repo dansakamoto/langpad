@@ -3,17 +3,19 @@ import * as googleTTS from "google-tts-api";
 import { kanji2number } from "@geolonia/japanese-numeral";
 import fetch from "node-fetch";
 
-import { characters } from "../../client/_data/characters";
+import { characters, ichiMods } from "../../client/_data/characters";
 
-const highNums = ["万", "億", "兆"];
+const highNums = Object.keys(ichiMods);
+const list = Object.values(ichiMods);
+for (const c of characters) {
+  list.push(c.kanji);
+}
 
 export default async function initAudio() {
-  for (const c of characters) {
-    const path = "public/audio/core/" + c.kanji + ".mp3";
+  for (const c of list) {
+    const path = "public/audio/core/" + c + ".mp3";
 
-    const k = !highNums.includes(c.kanji)
-      ? kanji2number(c.kanji).toString()
-      : c.kanji;
+    const k = !highNums.includes(c) ? kanji2number(c).toString() : c;
 
     if (!fs.existsSync(path)) {
       const url = googleTTS.getAudioUrl(k, {
