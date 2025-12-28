@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AudioHandler } from "./utils";
+import { AudioHandler } from "./_utils/AudioHandler";
+import { isValidNumber } from "./_utils/validators";
 
 import PhraseViewer from "./_components/PhraseViewer";
 import ButtonBoard from "./_components/ButtonBoard";
@@ -22,8 +23,21 @@ export default function App() {
       a.playQueue(chunks, (c: KanjiGroup[]) => {
         audioCallback(c);
       });
+      return;
+    }
+
+    a.playInstance(trigger);
+
+    if (
+      chunks.length > 0 &&
+      isValidNumber(chunks[chunks.length - 1].group + trigger)
+    ) {
+      const updated = [...chunks];
+      const newGroup = chunks[chunks.length - 1].group + trigger;
+      updated[updated.length - 1].group = newGroup;
+
+      setChunks(updated);
     } else {
-      a.playInstance(trigger);
       setChunks([
         ...chunks,
         {

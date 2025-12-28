@@ -1,15 +1,6 @@
-import { characters } from "../_data/characters";
+import getTranslation from "../_utils/getTranslation";
 
 import type { KanjiGroup } from "../types";
-
-const numFormatter = new Intl.NumberFormat("en-US");
-const translations: Record<string, string> = {};
-
-for (const c of characters) {
-  if (typeof c.translation === "number")
-    translations[c.kanji] = numFormatter.format(c.translation);
-  else translations[c.kanji] = c.translation;
-}
 
 export default function PhraseViewer({
   chunks,
@@ -36,11 +27,12 @@ export default function PhraseViewer({
       <div className="p-2 m-1 text-3xl">&nbsp;</div>
     );
 
-  let translation = "";
-  if (chunks.length > 0) {
-    if (isPlaying) translation = translations[chunks[0].group];
-    else translation = translations[chunks[chunks.length - 1].group];
-  }
+  const translation =
+    chunks.length === 0
+      ? ""
+      : isPlaying
+      ? getTranslation(chunks[0].group)
+      : getTranslation(chunks[chunks.length - 1].group);
 
   return (
     <div className="h-1/5 flex flex-col justify-evenly">

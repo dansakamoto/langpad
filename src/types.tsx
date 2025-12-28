@@ -1,4 +1,4 @@
-export type Character = { kanji: string; translation: string | number };
+export type Character = { kanji: string; translation: string };
 
 export type KanjiGroup = {
   key: string;
