@@ -25,4 +25,7 @@ dist-ssr
 
 # Dev
 dev
+
 .env
+public/audio/core/*.mp3
+public/audio/downloaded/*.mp3
