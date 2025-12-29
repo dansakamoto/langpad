@@ -6,7 +6,7 @@ export default function ButtonBoard({ handleTap }: { handleTap: TapHandler }) {
   const buttons = characters.map((char) => (
     <button
       key={"kanjigrid-" + char.kanji}
-      className="p-3"
+      className="p-3 h-1/5"
       onPointerDown={() => handleTap(char.kanji)}
       style={{ touchAction: "manipulation" }}
     >
