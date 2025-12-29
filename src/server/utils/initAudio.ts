@@ -1,3 +1,9 @@
+/* 
+  Archived as a startup function
+  Potentially reconfigurable as an occasionally
+  manually run utility
+*/
+
 import fs from "fs";
 import * as googleTTS from "google-tts-api";
 import { kanji2number } from "@geolonia/japanese-numeral";
