@@ -10,7 +10,6 @@ export default async function getAudio(req: Request<string>, res: Response) {
   const serverPath = "downloads/ja/" + req.body.text + ".b64";
 
   if (fs.existsSync(serverPath)) {
-    console.log("file found, sending local file");
     fs.readFile(serverPath, "base64", (err, data) => {
       if (err) {
         console.error(err);
@@ -21,8 +20,6 @@ export default async function getAudio(req: Request<string>, res: Response) {
 
     return;
   }
-
-  console.log("file not found, requesting new file");
 
   const t = req.body.text;
   const num = !apiExceptions.includes(t) ? kanji2number(t) : t;
