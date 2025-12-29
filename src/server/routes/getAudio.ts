@@ -1,6 +1,5 @@
 import * as googleTTS from "google-tts-api";
 import { kanji2number } from "@geolonia/japanese-numeral";
-import fetch from "node-fetch";
 import fs from "fs";
 
 import type { Request, Response } from "express";
@@ -8,13 +7,22 @@ import type { Request, Response } from "express";
 const apiExceptions = ["十一", "二兆"];
 
 export default async function getAudio(req: Request<string>, res: Response) {
-  const clientPath = "audio/downloaded/" + req.body.text + ".mp3";
-  const serverPath = "public/" + clientPath;
+  const serverPath = "downloads/ja/" + req.body.text + ".b64";
 
   if (fs.existsSync(serverPath)) {
-    res.send({ type: "url", url: clientPath });
+    console.log("file found, sending local file");
+    fs.readFile(serverPath, "base64", (err, data) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      res.send({ type: "data", audioData: data });
+    });
+
     return;
   }
+
+  console.log("file not found, requesting new file");
 
   const t = req.body.text;
   const num = !apiExceptions.includes(t) ? kanji2number(t) : t;
@@ -27,16 +35,7 @@ export default async function getAudio(req: Request<string>, res: Response) {
 
   res.send({ type: "data", audioData: audioData });
 
-  const url = googleTTS.getAudioUrl(num.toString(), {
-    lang: "ja",
-    slow: false,
-    host: "https://translate.google.com",
+  fs.writeFile(serverPath, audioData, "base64", (err) => {
+    if (err) console.error(err);
   });
-
-  const mp3 = await fetch(url);
-
-  const fileStream = fs.createWriteStream(serverPath);
-  if (mp3.body) {
-    mp3.body.pipe(fileStream);
-  }
 }
