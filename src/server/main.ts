@@ -4,14 +4,24 @@ import getAudio from "./routes/getAudio";
 
 const port = 3000;
 const app = express();
+
+if (process.env.NODE_ENV == "production") {
+  app.use("/", express.static("dist"));
+
+  app.listen(port, () => {
+    console.log(`Soundboard running in production mode on port ${port}`);
+  });
+} else {
+  ViteExpress.listen(app, port, () => {
+    console.log(`Soundboard running in development mode on port ${port}`);
+  });
+}
+
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
 app.use(express.json());
-ViteExpress.listen(app, port, () => {
-  console.log(`Soundboard running at port ${port}`);
-});
 
 app.post("/getAudio", getAudio);
