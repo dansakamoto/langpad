@@ -2,19 +2,27 @@ import { useState } from "react";
 import { AudioHandler } from "./_utils/AudioHandler";
 import { isValidNumber } from "./_utils/validators";
 import { auxPost, auxPre } from "./_data/characters";
-
 import PhraseViewer from "./_components/PhraseViewer";
 import ButtonBoard from "./_components/ButtonBoard";
-import KanjiGroup from "./_components/KanjiGroup";
+import KanjiGroup, { type KanjiStyle } from "./_components/KanjiGroup";
+import "./_style/theme-colors.css";
 
 const a = new AudioHandler();
+
+export interface TapProps {
+  trigger: string;
+  color?: number;
+}
 
 export default function App() {
   const [chunks, setChunks] = useState<KanjiGroup[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isInterrupting, setIsInterrupting] = useState(false);
 
-  function handleTap(trigger: string) {
+  function handleTap(p: TapProps) {
+    const trigger = p.trigger;
+    const color = p.color;
+
     if (isPlaying) {
       if (trigger === "stop") {
         a.cancelPlayback();
@@ -44,7 +52,8 @@ export default function App() {
       const newGroup = chunks[chunks.length - 1].asString() + trigger;
       a.loadAudio(newGroup);
 
-      updated[updated.length - 1].push(trigger, "main");
+      const style = color !== null ? `theme-${color}` : "default";
+      updated[updated.length - 1].push(trigger, style as KanjiStyle);
 
       setChunks(updated);
     } else if (
@@ -70,7 +79,8 @@ export default function App() {
       if (trigger in auxPre) {
         updated[updated.length - 1].push(auxPre[trigger], "aux");
       }
-      updated[updated.length - 1].push(trigger, "main");
+      const style = color !== null ? `theme-${color}` : "default";
+      updated[updated.length - 1].push(trigger, style as KanjiStyle);
       if (trigger in auxPost) {
         updated[updated.length - 1].push(auxPost[trigger], "aux");
       }
@@ -82,7 +92,8 @@ export default function App() {
       if (trigger in auxPre) {
         kg.push(auxPre[trigger], "aux");
       }
-      kg.push(trigger, "main");
+      const style = color !== null ? `theme-${color}` : "default";
+      kg.push(trigger, style as KanjiStyle);
       if (trigger in auxPost) {
         kg.push(auxPost[trigger], "aux");
       }

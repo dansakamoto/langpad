@@ -33,7 +33,7 @@ export default function PhraseViewer({
     }
   });
 
-  const baseStyle = "p-2 m-1 text-6xl text-nowrap";
+  const baseStyle = "p-4 border-3 border-white text-6xl text-nowrap";
 
   const phraseList =
     chunks.length > 0 ? (
@@ -63,13 +63,15 @@ export default function PhraseViewer({
           : getTranslation(chunks[chunks.length - 1].asString());
 
   return (
-    <div className="h-1/6 mt-10 flex flex-col justify-evenly">
+    <div className="h-1/5 mt-10 flex flex-col justify-evenly">
       <div className="flex justify-center">
         <ul id="viewer" className="flex overflow-hidden">
           {phraseList}
         </ul>
       </div>
-      <div className="flex justify-center text-3xl">{translation}</div>
+      <div id="translation" className="flex justify-center text-3xl">
+        {translation}
+      </div>
     </div>
   );
 }

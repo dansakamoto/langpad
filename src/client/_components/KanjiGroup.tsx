@@ -1,4 +1,11 @@
-type KanjiStyle = "main" | "aux";
+export type KanjiStyle =
+  | "default"
+  | "aux"
+  | "theme-0"
+  | "theme-1"
+  | "theme-2"
+  | "theme-3"
+  | "theme-4";
 type GroupPart = { key: string; kanji: string; style: KanjiStyle };
 
 let keyItr = 0;

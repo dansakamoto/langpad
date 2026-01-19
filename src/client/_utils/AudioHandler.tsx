@@ -92,7 +92,7 @@ export class AudioHandler {
       const explodedGroup = [];
       for (const c of queue[0].asString()) {
         const k = new KanjiGroup();
-        k.push(c, "main");
+        k.push(c, "default");
         explodedGroup.push(k);
       }
       const newQueue = [...explodedGroup, ...queue.slice(1)];
