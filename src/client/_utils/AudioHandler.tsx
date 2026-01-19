@@ -91,7 +91,9 @@ export class AudioHandler {
       this.waitRemaining = bufferAllowance;
       const explodedGroup = [];
       for (const c of queue[0].asString()) {
-        explodedGroup.push(new KanjiGroup(c));
+        const k = new KanjiGroup();
+        k.push(c, "main");
+        explodedGroup.push(k);
       }
       const newQueue = [...explodedGroup, ...queue.slice(1)];
       callback(newQueue);
