@@ -22,4 +22,12 @@ export default class KanjiGroup {
     }
     return s;
   }
+
+  kanjiOnly() {
+    let s = "";
+    for (const g of this.segments) {
+      if (g.style !== "aux") s += g.kanji;
+    }
+    return s;
+  }
 }
