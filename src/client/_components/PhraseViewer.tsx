@@ -33,7 +33,8 @@ export default function PhraseViewer({
     }
   });
 
-  const baseStyle = "p-4 border-3 border-white text-6xl text-nowrap";
+  const baseStyle =
+    "p-4 border-3 border-white text-3xl md:text-6xl text-nowrap";
 
   const phraseList =
     chunks.length > 0 ? (
@@ -76,7 +77,10 @@ export default function PhraseViewer({
           {phraseList}
         </ul>
       </div>
-      <div id="translation" className="flex justify-center text-3xl">
+      <div
+        id="translation"
+        className="flex justify-center text-2xl md:text-3xl"
+      >
         {translation}
       </div>
     </div>

@@ -13,7 +13,7 @@ export default function ButtonBoard({
   const buttons = characters.map((char) => (
     <button
       key={"kanjigrid-" + char.kanji}
-      className={`p-3 h-1/5 theme-${char.color}`}
+      className={`p-0 md:p-3 h-auto w-1/5 md:h-1/5 md:w-auto theme-${char.color}`}
       onPointerDown={() =>
         handleTap({ trigger: char.kanji, color: char.color })
       }
@@ -42,8 +42,8 @@ export default function ButtonBoard({
   );
 
   return (
-    <div className="flex flex-col h-1/2 m-10">
-      <div className="text-6xl flex flex-col flex-wrap-reverse content-center h-full">
+    <div className="flex flex-col h-auto md:h-1/2 m-10">
+      <div className="flex text-4xl flex-row flex-wrap md:text-6xl md:flex-col md:flex-wrap-reverse content-center h-full">
         {buttons}
       </div>
       {playbackButton}
