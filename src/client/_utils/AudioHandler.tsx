@@ -72,37 +72,64 @@ export class AudioHandler {
 
     if (queue.length === 0) {
       this.currentlyPlaying = "";
-    } else if (this.loadedAudio[queue[0].asString()]) {
-      this.currentlyPlaying = queue[0].key;
-      const source = this.audioContext.createBufferSource();
-      source.buffer = this.loadedAudio[queue[0].asString()];
-      source.connect(this.audioContext.destination);
+      this.resetLoadingTimeout();
+    } else if (this.audioReady(queue[0])) {
+      const source = this.playSound(queue[0]);
       source.onended = () => {
         callback(queue.slice(1));
         this.playQueue(queue.slice(1), callback);
       };
       source.start();
-    } else if (this.waitRemaining > 0) {
-      this.waitRemaining -= 200;
-      setTimeout(() => {
-        this.playQueue(queue, callback);
-      }, 200);
+      this.resetLoadingTimeout();
     } else {
-      this.waitRemaining = bufferAllowance;
-      const explodedGroup = [];
-      for (const c of queue[0].asString()) {
-        const k = new KanjiGroup();
-        k.push(c, "default");
-        explodedGroup.push(k);
+      if (this.loadTimerRunning()) {
+        setTimeout(() => {
+          this.playQueue(queue, callback);
+        }, 200);
+      } else {
+        const explodedGroup = [];
+        for (const c of queue[0].asString()) {
+          if (c in this.loadedAudio) {
+            const k = new KanjiGroup();
+            k.push(c, "default");
+            explodedGroup.push(k);
+          }
+        }
+        const newQueue = [...explodedGroup, ...queue.slice(1)];
+        callback(newQueue);
+        this.playQueue(newQueue, callback);
       }
-      const newQueue = [...explodedGroup, ...queue.slice(1)];
-      callback(newQueue);
-      this.playQueue(newQueue, callback);
     }
   }
 
   cancelPlayback() {
     this.interrupt = true;
+  }
+
+  resetLoadingTimeout() {
+    this.waitRemaining = bufferAllowance;
+  }
+
+  loadTimerRunning() {
+    if (this.waitRemaining > 0) {
+      this.waitRemaining -= 200;
+      return true;
+    } else {
+      this.resetLoadingTimeout();
+      return false;
+    }
+  }
+
+  audioReady(kg: KanjiGroup) {
+    return kg.asString() in this.loadedAudio;
+  }
+
+  playSound(kg: KanjiGroup) {
+    this.currentlyPlaying = kg.key;
+    const source = this.audioContext.createBufferSource();
+    source.buffer = this.loadedAudio[kg.asString()];
+    source.connect(this.audioContext.destination);
+    return source;
   }
 }
 
