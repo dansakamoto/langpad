@@ -34,7 +34,7 @@ export default function PhraseViewer({
   });
 
   const baseStyle =
-    "p-4 border-3 border-white text-3xl md:text-6xl text-nowrap";
+    "p-2 md:p-4 border-3 border-white text-3xl md:text-6xl text-nowrap";
 
   const phraseList =
     chunks.length > 0 ? (

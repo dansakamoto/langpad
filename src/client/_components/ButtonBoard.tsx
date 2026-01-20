@@ -25,7 +25,7 @@ export default function ButtonBoard({
 
   const playbackButton = isPlaying ? (
     <button
-      className="text-5xl"
+      className="text-4xl md:text-5xl"
       onPointerDown={() => handleTap({ trigger: "stop" })}
       style={{ touchAction: "manipulation" }}
     >
@@ -33,7 +33,7 @@ export default function ButtonBoard({
     </button>
   ) : (
     <button
-      className="text-6xl"
+      className="text-5xl md:text-6xl"
       onPointerDown={() => handleTap({ trigger: "play" })}
       style={{ touchAction: "manipulation" }}
     >
