@@ -13,5 +13,8 @@ for (const c of [...characters, ...combinations]) {
 export default function getTranslation(s: string) {
   if (s in translations) return translations[s];
   if (isValidNumber(s)) return numFormatter.format(bigKanji2number(s));
+  if (s.slice(-1) === "円" && isValidNumber(s.slice(0, -1))) {
+    return "￥" + numFormatter.format(bigKanji2number(s.slice(0, -1)));
+  }
   return "";
 }

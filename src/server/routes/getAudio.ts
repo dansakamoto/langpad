@@ -31,7 +31,8 @@ export default async function getAudio(req: Request<string>, res: Response) {
   if (fsLogging) console.log("File not found, requesting from API");
 
   const t = req.body.text;
-  const num = !apiExceptions.includes(t) ? bigKanji2number(t) : t;
+  const num =
+    apiExceptions.includes(t) || t.slice(-1) === "円" ? t : bigKanji2number(t);
 
   const audioData = await googleTTS.getAudioBase64(num.toString(), {
     lang: "ja",
