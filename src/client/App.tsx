@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AudioHandler } from "./_utils/AudioHandler";
-import { isValidNumber } from "./_utils/validators";
+import { isValidNumber } from "../_utils/validators";
 import {
   auxPost,
   auxPre,
@@ -8,7 +8,7 @@ import {
   addIchiMod,
   mutations,
   type mutationRules,
-} from "./_data/characters";
+} from "../_data/characters";
 import PhraseViewer from "./_components/PhraseViewer";
 import ButtonBoard from "./_components/ButtonBoard";
 import KanjiGroup, { type KanjiStyle } from "./_components/KanjiGroup";
