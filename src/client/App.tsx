@@ -139,7 +139,7 @@ export default function App() {
     const updatedChunks = [...chunks];
     const lastChunk = updatedChunks[updatedChunks.length - 1];
 
-    for (let i = 0; i < rules.deletions; i++) lastChunk.pop();
+    lastChunk.backspace(rules.deletions);
     lastChunk.push(rules.newChars, "aux");
 
     const style = color !== null ? `theme-${color}` : "default";
